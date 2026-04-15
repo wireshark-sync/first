@@ -1,34 +1,62 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 export function Nav() {
   const [isOpen, setIsOpen] = useState(false);
+  const [active, setActive] = useState<string>("home");
 
   const navLinks = [
-    { label: "About", href: "#expertise" },
-    { label: "Projects", href: "#projects" },
-    { label: "Contact", href: "#contact" },
+    { label: "About", href: "#expertise", id: "expertise" },
+    { label: "Projects", href: "#projects", id: "projects" },
+    { label: "Contact", href: "#contact", id: "contact" },
   ];
+
+  useEffect(() => {
+    const sections = Array.from(document.querySelectorAll("section[id]"));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActive(entry.target.id);
+          }
+        });
+      },
+      { root: null, rootMargin: "-40% 0px -40% 0px", threshold: 0 }
+    );
+
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, []);
+
+  function scrollToHash(e: React.MouseEvent, href: string) {
+    e.preventDefault();
+    const id = href.replace("#", "");
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    setIsOpen(false);
+  }
 
   return (
     <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-primary/10">
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-        <Link href="#home" className="text-xl font-bold text-primary">
+        <a href="#home" onClick={(e) => scrollToHash(e, "#home")} className="text-xl font-bold text-primary">
           AT
-        </Link>
+        </a>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
-            <Link
+            <a
               key={link.label}
               href={link.href}
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              onClick={(e) => scrollToHash(e, link.href)}
+              className={`transition-colors ${active === link.id ? "text-primary font-semibold" : "text-muted-foreground hover:text-foreground"}`}
+              aria-current={active === link.id ? "page" : undefined}
             >
               {link.label}
-            </Link>
+            </a>
           ))}
         </div>
 
@@ -37,6 +65,7 @@ export function Nav() {
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="text-muted-foreground hover:text-foreground"
+            aria-label="Toggle menu"
           >
             <svg
               className="w-6 h-6"
@@ -56,14 +85,14 @@ export function Nav() {
           {isOpen && (
             <div className="absolute top-full left-0 right-0 bg-background border-b border-primary/10 p-4 space-y-2">
               {navLinks.map((link) => (
-                <Link
+                <a
                   key={link.label}
                   href={link.href}
                   className="block text-muted-foreground hover:text-foreground transition-colors py-2"
-                  onClick={() => setIsOpen(false)}
+                  onClick={(e) => scrollToHash(e, link.href)}
                 >
                   {link.label}
-                </Link>
+                </a>
               ))}
             </div>
           )}

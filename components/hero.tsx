@@ -13,15 +13,19 @@ export function Hero() {
   return (
     <section id="home" className="relative min-h-screen w-full overflow-hidden">
       <div className="relative z-10 flex flex-col items-center justify-center px-4 pt-32 pb-20 text-center md:pt-40">
-        <div className="mb-8 md:mb-12">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-4 text-balance">
-            Ayush Tiwari
-          </h1>
-          <p className="text-lg md:text-2xl text-muted-foreground mb-6">
-            Computer Vision Specialist & Full Stack Developer
-          </p>
-          <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
-            I build intelligent systems that see, understand, and act. Combining computer vision expertise with full-stack development to create innovative solutions that push boundaries.
+        <div className="mb-8 md:mb-12 max-w-3xl mx-auto">
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <img src="/IMG_5812.jpg" alt="Ayush avatar" className="w-20 h-20 rounded-full border-2 border-primary object-cover" />
+            <div>
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-1 text-balance">
+                Ayush Tiwari
+              </h1>
+              <p className="text-sm md:text-base text-muted-foreground">Computer Vision & Full‑Stack</p>
+            </div>
+          </div>
+
+          <p className="text-sm md:text-base text-muted-foreground mx-auto mb-8 leading-relaxed max-w-2xl">
+            I build intelligent systems that see, understand, and act — combining computer vision research with full-stack engineering to ship production-ready products.
           </p>
         </div>
 
