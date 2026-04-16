@@ -23,6 +23,21 @@ export function ThemeToggle() {
     }, 1000);
   };
 
+  if (!mounted) {
+    return (
+      <Button
+        variant="ghost"
+        size="icon"
+        disabled
+        className="relative rounded-full transition-transform hover:scale-110 hover:bg-accent/50 focus:bg-accent/30 border border-border"
+        aria-label="Toggle theme"
+        title="Loading theme..."
+      >
+        <div className="h-5 w-5 rounded-full bg-gradient-to-r from-yellow-500 to-slate-600" />
+      </Button>
+    );
+  }
+
   return (
     <Button
       variant="ghost"
@@ -35,17 +50,13 @@ export function ThemeToggle() {
         animationDuration: isAnimating ? "1s" : undefined,
       }}
       aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-      title={`Current: ${mounted ? theme : "auto"} mode`}
+      title={`Current: ${theme} mode`}
       disabled={isAnimating}
     >
-      {mounted && theme ? (
-        theme === "dark" ? (
-          <Sun className="h-5 w-5 text-yellow-500" />
-        ) : (
-          <Moon className="h-5 w-5 text-slate-700" />
-        )
+      {theme === "dark" ? (
+        <Sun className="h-5 w-5 text-yellow-500" />
       ) : (
-        <div className="h-5 w-5 rounded-full bg-gradient-to-r from-yellow-500 to-slate-600" />
+        <Moon className="h-5 w-5 text-slate-700" />
       )}
     </Button>
   );
