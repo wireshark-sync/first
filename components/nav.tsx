@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export function Nav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,7 +47,7 @@ export function Nav() {
         </a>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-6">
           {navLinks.map((link) => (
             <a
               key={link.label}
@@ -58,10 +59,13 @@ export function Nav() {
               {link.label}
             </a>
           ))}
+          <div className="h-6 w-px bg-border/50" />
+          <ThemeToggle />
         </div>
 
-        {/* Mobile Navigation */}
-        <div className="md:hidden">
+        {/* Mobile Navigation + Theme Toggle */}
+        <div className="flex items-center gap-4 md:hidden">
+          <ThemeToggle />
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="text-muted-foreground hover:text-foreground"
