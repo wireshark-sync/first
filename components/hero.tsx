@@ -15,12 +15,12 @@ export function Hero() {
       <div className="relative z-10 flex flex-col items-center justify-center px-4 pt-32 pb-20 text-center md:pt-40">
         <div className="mb-8 md:mb-12 max-w-3xl mx-auto">
           <div className="flex items-center justify-center gap-4 mb-6">
-            <img src="/IMG_5812.jpg" alt="Ayush avatar" className="w-20 h-20 rounded-full border-2 border-primary object-cover" />
+            <img src="/IMG_5812.jpg" alt="Ayush avatar" className="w-20 h-20 rounded-full border-2 border-primary object-cover animate-fade-in-up" />
             <div>
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-1 text-balance">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-1 text-balance animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
                 Ayush Tiwari
               </h1>
-              <p className="text-sm md:text-base text-muted-foreground">Computer Vision & Full‑Stack</p>
+              <p className="text-sm md:text-base text-muted-foreground animate-fade-in-up" style={{ animationDelay: "0.2s" }}>Computer Vision & Full‑Stack</p>
             </div>
           </div>
 
