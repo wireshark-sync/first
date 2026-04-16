@@ -12,7 +12,11 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.png',
     shortcut: '/favicon.png',
-    apple: '/favicon.png'
+    apple: '/favicon.png',
+    other: [
+      { rel: 'icon', url: '/favicon-16.png' },
+      { rel: 'icon', url: '/favicon-32.png' }
+    ]
   }
 }
 
@@ -25,8 +29,15 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className="font-sans antialiased bg-background text-foreground">
 
-        {children}
-        {process.env.NODE_ENV === 'production' && <Analytics />}
+            {children}
+            {process.env.NODE_ENV === 'production' && <Analytics />}
+            <a
+              href="#home"
+              className="fixed left-4 top-4 z-50 rounded-full overflow-hidden ring-2 ring-primary/40 shadow-md hidden sm:inline-block transform transition-transform duration-200 hover:scale-105 focus:scale-105 focus:outline-none focus-visible:ring-4 focus-visible:ring-primary/50"
+              aria-label="Go to home"
+            >
+              <img src="/IMG_5812.jpg" alt="Ayush" className="w-12 h-12 object-cover block" />
+            </a>
       </body>
     </html>
   )
