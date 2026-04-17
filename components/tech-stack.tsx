@@ -94,7 +94,7 @@ export function TechStack() {
         {/* Animation Container */}
         <div
           ref={containerRef}
-          className="relative"
+          className="relative overflow-hidden w-full"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >

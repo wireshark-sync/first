@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-sans antialiased bg-background text-foreground">
+  <body className="font-sans antialiased bg-background text-foreground overflow-x-hidden">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             {children}
             {process.env.NODE_ENV === 'production' && <Analytics />}
