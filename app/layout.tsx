@@ -22,11 +22,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Ayush Tiwari | Computer Vision & Full Stack Developer',
     description: 'Portfolio of Ayush Tiwari - Computer Vision specialist, Full Stack Developer, and Software Engineer. Explore projects, expertise, and contact information.',
-    url: 'https://ayushtiwari.dev/',
+    url: 'https://tiwariayush.in/',
     siteName: 'Ayush Tiwari',
     images: [
       {
-        url: 'https://ayushtiwari.dev/placeholder-logo.png',
+        url: 'https://tiwariayush.in/placeholder-logo.png',
         width: 1200,
         height: 630,
         alt: 'Ayush Tiwari Portfolio'
@@ -64,7 +64,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Person",
               "name": "Ayush Tiwari",
-              "url": "https://ayushtiwari.dev",
+              "url": "https://tiwariayush.in",
               "sameAs": [
                 "https://github.com/wireshark-sync",
                 "https://www.linkedin.com/in/ayushtiwari/"
