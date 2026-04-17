@@ -17,94 +17,123 @@ export const technologies = [
   { name: "AWS", icon: "☁️" },
 ];
 
-
 export function TechStack() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [isHovering, setIsHovering] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
-    const scrollContainer = scrollRef.current;
-    if (!scrollContainer) return;
+    const container = innerRef.current;
+    if (!container) return;
 
     let animationId: number;
-    let scrollPos = 0;
-    const SCROLL_SPEED = 0.5;
+    let position = 0;
+    const SPEED = 0.3; // Very smooth, gentle speed
+    const direction = 1; // 1 for forward, -1 for backward
 
     const animate = () => {
-      if (!isHovering) {
-        scrollPos += SCROLL_SPEED;
-        const maxScroll = scrollContainer.scrollWidth / 2;
-        
-        if (scrollPos >= maxScroll) {
-          scrollPos = 0;
+      if (!isPaused) {
+        position += SPEED * direction;
+
+        // Get the total width of one set of items
+        const totalWidth = container.scrollWidth / 2;
+
+        // Reset position when reaching the end
+        if (direction > 0 && position >= totalWidth) {
+          position = 0;
+        } else if (direction < 0 && position <= -totalWidth) {
+          position = 0;
         }
-        
-        scrollContainer.style.transform = `translateX(-${scrollPos}px)`;
+
+        container.style.transform = `translateX(${-position}px)`;
       }
+
       animationId = requestAnimationFrame(animate);
     };
 
     animationId = requestAnimationFrame(animate);
 
     return () => cancelAnimationFrame(animationId);
-  }, [isHovering]);
+  }, [isPaused]);
 
   return (
-    <section className="py-16 md:py-24 px-4 bg-background/50">
+    <section className="py-20 md:py-32 px-4 md:px-6 bg-background">
       <div className="max-w-7xl mx-auto">
-        <h3 className="text-center text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-12">
-          Technologies & Tools
-        </h3>
-        
-        <div className="relative overflow-hidden">
-          {/* Gradient masks for smooth edges */}
-          <div className="absolute left-0 top-0 w-20 h-full bg-gradient-to-r from-background to-transparent z-10 pointer-events-none"></div>
-          <div className="absolute right-0 top-0 w-20 h-full bg-gradient-to-l from-background to-transparent z-10 pointer-events-none"></div>
-          
-          {/* Scrolling container */}
+        {/* Header - Premium minimal style */}
+        <div className="text-center mb-16 md:mb-20">
+          <h2 className="text-3xl md:text-4xl font-light tracking-tight mb-3">
+            Tech Stack
+          </h2>
+          <p className="text-sm md:text-base text-muted-foreground font-light max-w-md mx-auto">
+            Modern tools and technologies powering seamless digital experiences
+          </p>
+        </div>
+
+        {/* Animation Container */}
+        <div
+          ref={containerRef}
+          className="relative"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {/* Gradient fade effect - left side */}
+          <div className="absolute left-0 top-0 bottom-0 w-24 md:w-32 bg-gradient-to-r from-background via-background/80 to-transparent z-20 pointer-events-none" />
+
+          {/* Gradient fade effect - right side */}
+          <div className="absolute right-0 top-0 bottom-0 w-24 md:w-32 bg-gradient-to-l from-background via-background/80 to-transparent z-20 pointer-events-none" />
+
+          {/* Scrolling content */}
           <div
-            ref={scrollRef}
+            ref={innerRef}
             className="flex gap-8 md:gap-12 will-change-transform"
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-            style={{ width: "max-content" }}
+            style={{
+              width: "max-content",
+              transition: isPaused ? "none" : "none",
+            }}
           >
-            {/* Original set */}
+            {/* First set - visible items */}
             {technologies.map((tech, idx) => (
-              <div
-                key={`original-${idx}`}
-                className="flex flex-col items-center gap-3 min-w-fit px-4 py-6 rounded-lg hover:bg-accent/10 transition-colors duration-300 group cursor-pointer"
-              >
-                <div className="relative">
-                  <span className="text-4xl md:text-5xl block group-hover:scale-125 group-hover:animate-bounce transition-transform duration-300">
-                    {tech.icon}
-                  </span>
-                </div>
-                <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors duration-200">
-                  {tech.name}
-                </span>
-              </div>
+              <TechItem key={`set1-${idx}`} tech={tech} />
             ))}
-            
-            {/* Duplicated set for seamless loop */}
+
+            {/* Duplicate set - for seamless loop */}
             {technologies.map((tech, idx) => (
-              <div
-                key={`duplicate-${idx}`}
-                className="flex flex-col items-center gap-3 min-w-fit px-4 py-6 rounded-lg hover:bg-accent/10 transition-colors duration-300 group cursor-pointer"
-              >
-                <div className="relative">
-                  <span className="text-4xl md:text-5xl block group-hover:scale-125 group-hover:animate-bounce transition-transform duration-300">
-                    {tech.icon}
-                  </span>
-                </div>
-                <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors duration-200">
-                  {tech.name}
-                </span>
-              </div>
+              <TechItem key={`set2-${idx}`} tech={tech} />
             ))}
           </div>
         </div>
+
+        {/* Pause indicator - subtle */}
+        {isPaused && (
+          <div className="text-center mt-8">
+            <p className="text-xs text-muted-foreground/60">
+              Release to continue
+            </p>
+          </div>
+        )}
       </div>
     </section>
+  );
+}
+
+function TechItem({ tech }: { tech: (typeof technologies)[0] }) {
+  return (
+    <div className="flex flex-col items-center gap-2.5 min-w-fit px-3 py-4 md:px-4 md:py-5 group cursor-default transition-all duration-300">
+      {/* Icon container with subtle hover effect */}
+      <div className="relative flex items-center justify-center">
+        {/* Subtle glow on hover */}
+        <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 blur-xl bg-primary/5 transition-opacity duration-300" />
+
+        {/* Icon */}
+        <span className="text-3xl md:text-4xl block transition-all duration-300 group-hover:scale-110 relative z-10">
+          {tech.icon}
+        </span>
+      </div>
+
+      {/* Label */}
+      <span className="text-xs md:text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors duration-300 whitespace-nowrap">
+        {tech.name}
+      </span>
+    </div>
   );
 }
