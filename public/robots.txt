@@ -1,0 +1,5 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://ayushtiwari.dev/sitemap.xml
+Host: https://ayushtiwari.dev
